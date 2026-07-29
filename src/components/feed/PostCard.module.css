@@ -1,0 +1,116 @@
+.card {
+  background: var(--color-paper-raised);
+  border: 1px solid var(--color-parchment-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-card);
+  transform: translateY(-2px);
+}
+
+.imageLink {
+  display: block;
+  aspect-ratio: 1 / 1;
+  background: var(--color-museum-green-soft);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.body {
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.userRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--color-parchment-border);
+}
+
+.userName {
+  font-weight: 600;
+}
+
+.dot {
+  color: var(--color-muted);
+}
+
+.time {
+  color: var(--color-muted);
+}
+
+.caption {
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--color-ink-soft);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.actionsRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: 4px;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-parchment-border);
+}
+
+.actionBtn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  color: var(--color-muted);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+}
+
+.actionBtn:hover {
+  color: var(--color-ink);
+}
+
+.liked {
+  color: var(--color-wax-red);
+}
+
+.liked:hover {
+  color: var(--color-wax-red);
+}
+
+.saveBtn {
+  margin-left: auto;
+}
+
+.saved {
+  color: var(--color-brass-dark);
+}
+
+.saved:hover {
+  color: var(--color-brass-dark);
+}

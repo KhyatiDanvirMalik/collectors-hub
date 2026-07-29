@@ -1,0 +1,113 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--color-paper-raised);
+  border-bottom: 1px solid var(--color-parchment-border);
+}
+
+.inner {
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brandMark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-ink);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+}
+
+.brandName {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+}
+
+.desktopNav {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.navLink {
+  padding: 8px 14px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-ink-soft);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.navLink:hover {
+  background: var(--color-museum-green-soft);
+  color: var(--color-museum-green);
+}
+
+.navLinkActive {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+.navLinkActive:hover {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+.mobileNav {
+  display: none;
+}
+
+@media (max-width: 780px) {
+  .desktopNav {
+    display: none;
+  }
+
+  .brandName {
+    font-size: 16px;
+  }
+
+  .mobileNav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: var(--color-paper-raised);
+    border-top: 1px solid var(--color-parchment-border);
+    padding: 6px var(--space-2) calc(env(safe-area-inset-bottom, 0px) + 6px);
+  }
+
+  .mobileNavLink {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 6px 4px;
+    color: var(--color-muted);
+    font-size: 10.5px;
+    font-weight: 500;
+    border-radius: var(--radius-sm);
+  }
+
+  .mobileNavLinkActive {
+    color: var(--color-museum-green);
+  }
+}

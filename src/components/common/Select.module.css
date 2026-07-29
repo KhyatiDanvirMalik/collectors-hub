@@ -1,0 +1,29 @@
+.wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.select {
+  appearance: none;
+  background: var(--color-paper-raised);
+  border: 1px solid var(--color-parchment-border);
+  border-radius: var(--radius-md);
+  padding: 10px 30px 10px 12px;
+  font-size: 13.5px;
+  color: var(--color-ink);
+  cursor: pointer;
+  font-family: var(--font-body);
+}
+
+.select:focus {
+  outline: none;
+  border-color: var(--color-brass);
+}
+
+.chevron {
+  position: absolute;
+  right: 10px;
+  color: var(--color-muted);
+  pointer-events: none;
+}
