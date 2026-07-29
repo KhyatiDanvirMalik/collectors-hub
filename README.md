@@ -4,8 +4,6 @@ A responsive React + TypeScript web application for collectors to browse a
 marketplace, discover community posts, and manage a personal collection
 (Owned / Wishlist / Selling).
 
-Built for the React Web Developer Internship Assignment.
-
 - **GitHub Repository:** https://github.com/KhyatiDanvirMalik/collectors-hub
 - **Live Demo:** https://collectors-hub-eta.vercel.app
 
