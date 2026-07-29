@@ -1,10 +1,13 @@
 # Collector's Hub
 
-A responsive React + TypeScript web app for collectors to browse a marketplace,
-discover community posts, and manage a personal collection (Owned / Wishlist /
-Selling).
+A responsive React + TypeScript web application for collectors to browse a
+marketplace, discover community posts, and manage a personal collection
+(Owned / Wishlist / Selling).
 
 Built for the React Web Developer Internship Assignment.
+
+- **GitHub Repository:** https://github.com/KhyatiDanvirMalik/collectors-hub
+- **Live Demo:** https://collectors-hub-eta.vercel.app
 
 ---
 
@@ -13,22 +16,26 @@ Built for the React Web Developer Internship Assignment.
 **Requirements:** Node.js 18+ and npm.
 
 ```bash
-# 1. Install dependencies
+# 1. Clone the repository
+git clone https://github.com/KhyatiDanvirMalik/collectors-hub.git
+cd collectors-hub
+
+# 2. Install dependencies
 npm install
 
-# 2. Start the dev server
+# 3. Start the dev server
 npm run dev
 # App runs at http://localhost:5173
 
-# 3. Build for production
+# 4. Build for production
 npm run build
 
-# 4. Preview the production build
+# 5. Preview the production build
 npm run preview
 ```
 
 There is no backend to configure — all data is served from an in-memory mock
-API layer (see `src/data/api.ts`), so the app runs immediately after `npm install`.
+API layer (`src/data/api.ts`), so the app runs immediately after `npm install`.
 
 ---
 
@@ -53,9 +60,10 @@ src/
   App.tsx            Routing + context provider composition
 ```
 
-The code is organized by feature (marketplace / feed / collection) with a shared
-`common/` layer, so each module can be extended independently without touching
-the others.
+The code is organized by feature (marketplace / feed / collection) with a
+shared `common/` layer underneath, so each module can be extended
+independently without touching the others, and new modules could be added
+following the same pattern.
 
 ---
 
@@ -73,22 +81,21 @@ the others.
 - **"Add to Collection" from the Marketplace** adds to the **Owned**
   collection; "Add to Wishlist" adds to **Wishlist**. The **Selling**
   collection is populated by moving an item there from My Collection (there's
-  no separate "list an item for sale" flow, which wasn't in the brief).
+  no separate "list an item for sale" flow, which wasn't part of the brief).
   Estimated Value defaults to the listing's price if the listing doesn't set
   one explicitly.
-- **De-duplication** is scoped per collection type: the same listing can be
+- **De-duplication is scoped per collection type**: the same listing can be
   in both Owned and Wishlist simultaneously (e.g. "I own one but want a
   second"), but can't be added twice to the *same* collection — attempting
   that shows an inline error toast instead of creating a duplicate.
-- **Persistence** uses `localStorage` (a bonus feature) so a visitor's
+- **Persistence uses `localStorage`** (a bonus feature) so a visitor's
   collection, likes, and saved posts survive a page refresh. This is
   intentionally local per-browser rather than synced anywhere, consistent
   with "no authentication."
 - **Filters persist across navigation** by living in the URL's query string
   (e.g. `/marketplace?category=Coins&sort=price-asc`). This satisfies the
   "maintain selected filters while navigating" requirement and also makes
-  filtered views shareable/bookmarkable, and survives back/forward browser
-  navigation.
+  filtered views shareable/bookmarkable, and survives browser back/forward.
 
 ---
 
@@ -100,12 +107,13 @@ the others.
 | `react-router-dom` | Client-side routing (marketplace/feed/collection + detail pages, 404) |
 | `typescript` | Static typing throughout |
 | `vite` | Dev server + build tooling |
-| CSS Modules (built into Vite) | Scoped component styling — no UI kit dependency, all components are hand-built |
+| CSS Modules (built into Vite) | Scoped component styling — no UI kit dependency |
 
-No UI component library (Material UI / Chakra / Ant Design) was used — all
-components (Button, Select, Modal, cards, etc.) are custom-built to keep the
-bundle small and the visual identity distinctive. No external state management
-library was needed; React Context + hooks were sufficient for this app's scope.
+No UI component library (Material UI / Chakra / Ant Design) was used — every
+component (Button, Select, Modal, cards, etc.) is custom-built, which kept
+the bundle small (~87KB gzipped JS) and let the visual identity feel
+intentional rather than templated. No external state management library was
+needed; React Context + hooks were sufficient for this app's scope.
 
 ---
 
@@ -137,13 +145,37 @@ suggested bonus features:
   palette, and a recurring "specimen tag" catalog-number motif on every card)
   rather than a generic template look.
 
+**Not implemented (out of scope):** infinite scrolling and dark mode weren't
+needed at this dataset size (16 listings / 8 posts) and were deprioritized in
+favor of polishing the three core modules; there's no automated test suite,
+with effort concentrated on correctness, UX polish, and code organization
+instead.
+
 ---
 
-## What Wasn't Implemented (Out of Scope)
+## Notes on Engineering Approach
 
-- Infinite scrolling and dark mode were not implemented — pagination isn't
-  needed at this dataset size (16 listings / 8 posts), and dark mode was
-  deprioritized in favor of polishing the core three modules.
-- No automated test suite — given the assignment's time expectations,
-  effort was concentrated on correctness, UX polish, and code organization
-  over test coverage.
+A few notes on how the areas called out below were approached, for context
+during review:
+
+- **Reusable components** — Every visual pattern that repeats (cards, badges,
+  search inputs, filter bars, empty/error/loading states) is a single shared
+  component consumed by all three modules, rather than three separate
+  implementations. `SafeImage`, `EmptyState`, `ErrorState`, and `Button` alone
+  are reused across 8+ call sites.
+- **Scalable organization** — Code is split by responsibility (types / data /
+  context / hooks / utils / components / pages), and filter/sort logic is
+  extracted into pure, testable functions (`utils/marketplaceFilters.ts`,
+  `utils/feedFilters.ts`, `utils/collectionFilters.ts`) rather than being
+  buried inside components.
+- **Edge cases handled deliberately** rather than as an afterthought:
+  duplicate-add prevention, empty states tailored per-tab (an empty Wishlist
+  reads differently from an empty Owned collection), broken/missing images,
+  no-results-from-search states (distinct from the fully-empty state),
+  loading and error states with a retry action, and race-condition guarding
+  in the data-fetching hook so a fast filter change can't let a stale
+  response overwrite a newer one.
+- **Product/UX decisions** — filters live in the URL (not just component
+  state) specifically so the "maintain filters while navigating" requirement
+  holds even through a full page reload, not just client-side navigation;
+  toasts confirm every state-changing action so nothing happens silently.
